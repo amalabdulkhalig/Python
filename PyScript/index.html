@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+        <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+    </head>
+    <!-- put all the python pakages inside this tag -->
+    <py-env>
+        - numpy 
+        - matplotlib
+    </py-env>
+
+    <body>
+        <!-- put all the python code inside this tag -->
+        <p>The plot is <span id = "plot"> </span> </p>
+        <py-script> 
+            import matplotlib.pyplot as plt
+            import numpy as np
+
+            x = np.arange(0, 4*np.pi, 0.1)
+            y = np.sin(x)
+
+            fig, ax = plt.subplots()
+            ax.plot(x,y)
+            pyscript.write('plot', fig)
+        </py-script>
+    </body>
+</html>

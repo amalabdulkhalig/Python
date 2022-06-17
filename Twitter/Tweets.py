@@ -2,6 +2,7 @@ import snscrape.modules.twitter as sntwitter
 import pandas as pd 
 import arabic_reshaper as arabic
 
+
 #query used like the Twitter serch bar, a single word could be searched or 
 #you can use the advance serch then copy the query and paste it here as a text 
 class Tweets:
@@ -11,7 +12,7 @@ class Tweets:
         self.limit = 10 #number of tweets returned 
     
     #-------------------------- 
-    def GetTweets(self):
+    def GetNumTweets(self):
         for tweet in sntwitter.TwitterSearchScraper(self.query).get_items():
             if len(self.tweets) == self.limit:
                 break 
@@ -21,8 +22,13 @@ class Tweets:
         print(df['Tweet'][:1])
         return df
 
+    def GetTweets(self):
+        for tweet in sntwitter.TwitterSearchScraper(self.query).get_items():
+            self.tweets.append([tweet.date,tweet.user.username,tweet.content])
+        df = pd.DataFrame(self.tweets,columns=['Date','User','Tweet'])
+        return df
     #--------------------------
-    def GetArabicTweets(self):
+    def GetNumArabicTweets(self):
         for tweet in sntwitter.TwitterSearchScraper(self.query).get_items():
             if len(self.tweets) == self.limit:
                 break 

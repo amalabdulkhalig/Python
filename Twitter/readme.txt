@@ -47,3 +47,11 @@ The tweets object contecnt:
 'place': None, 
 'hashtags': None, 
 'cashtags': None}
+
+
+Queries examples: 
+to get the queries use Twitter advance search tools, then copy the result from the serch bar
+ - search for one account tweets , From date To date:
+    (from:elonmusk) until:2022-06-16 since:2020-01-01 
+
+"Diabetes" and "insulin" and "pump" "insulin pump" ("diabetes" or "diabetic") -"sugar" (#diabetes OR #glucose) lang:en

@@ -3,25 +3,39 @@ import pandas as pd
 import arabic_reshaper as arabic
 
 #query used like the Twitter serch bar, a single word could be searched or 
-# you can use the advance serch then copy the query and paste it here as a text 
-query = "(from:elonmusk) until:2022-06-16 since:2020-01-01" 
+#you can use the advance serch then copy the query and paste it here as a text 
+class Tweets:
+    def __init__(self):
+        self.query = "query" #"(from:elonmusk) until:2022-06-16 since:2020-01-01" 
+        self.tweets = list() #save the list of tweets returns 
+        self.limit = 10 #number of tweets returned 
+    
+    #-------------------------- 
+    def GetTweets(self):
+        for tweet in sntwitter.TwitterSearchScraper(self.query).get_items():
+            if len(self.tweets) == self.limit:
+                break 
+            else:
+                self.tweets.append([tweet.date,tweet.user.username,tweet.content])
+        df = pd.DataFrame(self.tweets,columns=['Date','User','Tweet'])
+        print(df['Tweet'][:1])
+        return df
 
-tweets = [] #save the list of tweets returns 
-limit = 10 #number of tweets returned 
-def GetArabicTweets__(query):
-    # vars(tweets) returns a dictionary of the tweets any it's metadata 
-    for tweet in sntwitter.TwitterSearchScraper(query).get_items():
-        #print(vars(tweet)) #use vars to print all attributes of a tweets
-        #break 
-        if len(tweets) == limit:
-            break 
-        else:
-            reshaped_tweet = arabic.reshape(tweet.content)[::-1]
-            tweets.append([tweet.date,tweet.user,reshaped_tweet])
+    #--------------------------
+    def GetArabicTweets(self):
+        for tweet in sntwitter.TwitterSearchScraper(self.query).get_items():
+            if len(self.tweets) == self.limit:
+                break 
+            else:
+                reshaped_tweet = arabic.reshape(tweet.content)[::-1]
+                self.tweets.append([tweet.date,tweet.user.username,reshaped_tweet])
 
-    df = pd.DataFrame(tweets,columns=['Date','User','Tweet'])
-    print(df['Tweet'][:1])
-#--------------------------
-for tweet in sntwitter.TwitterSearchScraper(query).get_items():
-    print(vars(tweet)) #use vars to print all attributes of a tweets
-    break
+        df = pd.DataFrame(self.tweets,columns=['Date','User','Tweet'])
+        print(df['Tweet'][:1])
+        return df
+
+    #--------------------------
+    def TestOneTweet(self):
+        for tweet in sntwitter.TwitterSearchScraper(self.query).get_items():
+            print(vars(tweet)) #use vars to print all attributes of a tweets
+            break
